@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>love</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            overflow: hidden;
+        }
+        .love-text {
+            position: absolute;
+            color: white;
+            font-family: "微软雅黑", sans-serif;
+            pointer-events: none;
+            text-shadow: 0 0 5px rgba(255,255,255,0.3); /* 增加文字阴影，更醒目 */
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 超丰富浪漫文字库（60+条）
+        const texts = [
+            "爱你哦", "想你了", "喜欢你", "天天开心", "照顾好自己",
+            "期待见面", "多喝温水", "早点休息", "要幸福呀", "永远爱你",
+            "你是我的唯一", "余生请多指教", "有你真好", "满心欢喜都是你",
+            "朝朝暮暮都是你", "往后余生皆是你", "四季有你才完整", "偏爱只给你",
+            "眼里只有你", "我的世界因你而亮", "余生漫漫皆是你", "对你的爱不止一点点",
+            "你是我生命的光", "每天都更爱你一点", "想把世界都给你", "你是我的专属浪漫",
+            "一想到你就嘴角上扬", "你是我的心跳", "浪漫予你", "温柔只对你",
+            "满心满眼都是你", "爱你到天荒地老", "此生挚爱", "为你赴汤蹈火",
+            "你是我的星辰大海", "往后余生请多关照", "有你便是晴天", "深情不及久伴",
+            "厚爱无需多言", "陪你走过春夏秋冬", "与你共度朝朝暮暮", "执子之手与子偕老",
+            "你是我藏在心底的温柔", "见你时满心欢喜", "思念如潮涌", "爱意藏不住",
+            "愿为你倾尽所有", "你是我的命中注定", "往后余生不离不弃", "爱你如初",
+            "日日思君不见君", "此情不渝", "爱如潮水", "满心牵挂都是你",
+            "你是我的白月光", "为你心动千千万万次", "有你在才完整", "余生有你足矣",
+            "对你的思念不止", "爱你没有理由", "你是我的偏爱和例外", "温柔以待只为你",
+            "岁月静好只因有你", "把最好的都给你", "爱你到永远"
+        ];
+
+        // 超全颜色列表（30+种浪漫色）
+        const colors = [
+            "#FF69B4", "#DA70D6", "#FFD700", "#3CB371", "#87CEEB",
+            "#FFA500", "#FFC0CB", "#98FB98", "#7B68EE", "#48D1CC",
+            "#FF4500", "#9932CC", "#00FF7F", "#FFE4B5", "#8A2BE2",
+            "#FF8C00", "#EE82EE", "#00FA9A", "#ADD8E6", "#F0E68C",
+            "#FF1493", "#C71585", "#DB7093", "#FFB6C1", "#FFA07A",
+            "#9370DB", "#6A5ACD", "#4169E1", "#1E90FF", "#00BFFF",
+            "#7FFFD4", "#F5DEB3", "#DDA0DD", "#FF6347", "#FF7F50"
+        ];
+
+        // 文字类（去掉旋转，保留移动、透明度、阴影）
+        class LoveText {
+            constructor() {
+                this.element = document.createElement("div");
+                this.element.className = "love-text";
+                this.element.innerText = texts[Math.floor(Math.random() * texts.length)];
+                this.element.style.color = colors[Math.floor(Math.random() * colors.length)];
+                this.element.style.fontSize = `${Math.random() * 18 + 10}px`; // 字号范围扩大
+                this.element.style.opacity = Math.random() * 0.6 + 0.4; // 透明度0.4-1，层次感更强
+                this.x = Math.random() * window.innerWidth;
+                this.y = Math.random() * window.innerHeight;
+                this.dx = (Math.random() - 0.5) * 3.5; // 移动速度更灵动
+                this.dy = (Math.random() - 0.5) * 3.5;
+                this.element.style.left = `${this.x}px`;
+                this.element.style.top = `${this.y}px`;
+                document.body.appendChild(this.element);
+            }
+
+            move() {
+                this.x += this.dx;
+                this.y += this.dy;
+
+                // 边界反弹（增加缓冲，移动更自然）
+                if (this.x < -50 || this.x > window.innerWidth + 50) {
+                    this.dx = -this.dx * 0.95; // 轻微减速，避免生硬反弹
+                }
+                if (this.y < -50 || this.y > window.innerHeight + 50) {
+                    this.dy = -this.dy * 0.95;
+                }
+
+                this.element.style.left = `${this.x}px`;
+                this.element.style.top = `${this.y}px`;
+            }
+        }
+
+        // 大幅增加文字数量（120个，满屏密集效果）
+        const loveTexts = [];
+        for (let i = 0; i < 120; i++) {
+            loveTexts.push(new LoveText());
+        }
+
+        // 动画循环（优化流畅度）
+        function animate() {
+            loveTexts.forEach(text => text.move());
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
